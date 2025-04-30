@@ -23,11 +23,13 @@ return {
   lazy = false, -- load during startup
   priority = 1000, -- load this before other plugins
   config = function()
-    -- Setup with default settings (gray variant)
-    require("night-wolf").setup()
+    -- Apply the colorscheme (default gray variant)
+    vim.cmd("colorscheme night_wolf")
 
-    -- Apply the colorscheme
-    vim.cmd("colorscheme night-wolf")
+    -- Or choose another variant:
+    -- vim.cmd("colorscheme night_wolf_black")
+    -- vim.cmd("colorscheme night_wolf_dark_blue")
+    -- vim.cmd("colorscheme night_wolf_dark_gray")
   end,
 }
 ```
@@ -38,27 +40,48 @@ return {
 use {
   "tylerCaineRhodes/night-wolf.nvim",
   config = function()
-    require("night-wolf").setup()
-    vim.cmd("colorscheme night-wolf")
+    vim.cmd("colorscheme night_wolf") -- Or any other variant
   end
 }
 ```
 
-## Configuration
+## Using Theme Variants
 
-You can configure the theme variant:
+Each theme variant is available as a separate colorscheme:
+
+```vim
+" In Vim/Neovim command line
+:colorscheme night_wolf            " Gray variant (default)
+:colorscheme night_wolf_black      " Black variant
+:colorscheme night_wolf_dark_blue  " Dark Blue variant
+:colorscheme night_wolf_dark_gray  " Dark Gray variant
+```
+
+Or in your configuration file:
 
 ```lua
+-- In your init.lua
+vim.cmd("colorscheme night_wolf_dark_blue") -- Choose your preferred variant
+```
+
+## Configuration
+
+You can also configure the theme programmatically:
+
+```lua
+-- Setup and load with specific variant
 require("night-wolf").setup({
-  variant = "gray", -- Options: "gray" (default), "black", "dark-blue", "dark-gray"
+  variant = "dark-blue", -- Options: "gray" (default), "black", "dark-blue", "dark-gray"
 })
+require("night-wolf").load() -- Apply the configured variant
 ```
 
 To switch variants at runtime:
 
 ```lua
 -- Switch to a different variant
-require("night-wolf").setup({ variant = "dark-blue" })
+require("night-wolf").setup({ variant = "black" })
+require("night-wolf").load()
 ```
 
 ## Theme Variants

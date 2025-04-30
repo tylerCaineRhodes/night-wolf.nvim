@@ -10,13 +10,9 @@ function M.setup(opts)
   if opts then
     config = vim.tbl_extend('force', config, opts)
   end
-
-  -- Load the selected variant
-  M.load()
 end
 
 function M.load()
-  -- Load the appropriate color palette based on the selected variant
   local colors
 
   if config.variant == 'black' then
@@ -26,7 +22,6 @@ function M.load()
   elseif config.variant == 'dark-gray' then
     colors = require('night-wolf.colors-dark-gray')
   else
-    -- Default to gray variant
     colors = require('night-wolf.colors')
   end
 
@@ -36,7 +31,14 @@ function M.load()
     vim.cmd('syntax reset')
   end
   vim.o.background = 'dark'
-  vim.g.colors_name = 'night-wolf'
+
+  local scheme_name = 'night_wolf'
+
+  if config.variant ~= 'gray' then
+    local variant_name = config.variant:gsub('-', '_')
+    scheme_name = 'night_wolf_' .. variant_name
+  end
+  vim.g.colors_name = scheme_name
 
   -- Apply highlights
   M.apply_highlights(colors)
@@ -47,7 +49,6 @@ function M.apply_highlights(colors)
     vim.api.nvim_set_hl(0, group, opts)
   end
 
-  -- Define highlight groups
   -- Syntax highlighting
   set_highlight('Normal', { fg = colors.text, bg = colors.principal })
   set_highlight('Comment', { fg = colors.comment, italic = true })
